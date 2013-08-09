@@ -64,7 +64,7 @@
 #include "lstring.h"
 #include "sc.h"
 #include "svnrev.h"
-#define VERSION_STR "3.2." SVN_REVSTR
+#define VERSION_STR "3.2." SVN_REVSTR "+SAMP"
 #define VERSION_INT 0x0302
 
 static void resetglobals(void);
@@ -1536,7 +1536,7 @@ static int getclassspec(int initialtok,int *fpublic,int *fstatic,int *fstock,int
  *
  *  At this level, only static declarations and function definitions are legal.
  */
-static void parse(void)
+void parse(void)
 {
   int tok,fconst,fstock,fstatic,fpublic;
   cell val;
@@ -1662,14 +1662,18 @@ static void dumplits(void)
 static void dumpzero(int count)
 {
   int i;
+  char *out;
 
   if (sc_status==statSKIP || count<=0)
     return;
+  assert(count < CELL_MAX / 2);
   assert(curseg==2);
   defstorage();
   i=0;
+  out = itoh(0);
   while (count-- > 0) {
-    outval(0, FALSE);
+    //outval(0, FALSE);
+	stgwrite(out);
     i=(i+1) % 16;
     stgwrite((i==0 || count==0) ? "\n" : " ");
     if (i==0 && count>0)
@@ -1846,7 +1850,7 @@ static void declglb(char *firstname,int firsttag,int fpublic,int fstatic,int fst
   int numdim;
   short filenum;
   symbol *sym;
-  constvalue *enumroot;
+  constvalue *enumroot = NULL;
   #if !defined NDEBUG
     cell glbdecl=0;
   #endif
@@ -1865,8 +1869,10 @@ static void declglb(char *firstname,int firsttag,int fpublic,int fstatic,int fst
       firstname=NULL;
     } else {
       tag=pc_addtag(NULL);
-      if (lex(&val,&str)!=tSYMBOL)      /* read in (new) token */
+      if (lex(&val,&str)!=tSYMBOL) {    /* read in (new) token */
         error(20,str);                  /* invalid symbol name */
+		litidx = 0;
+	  }
       assert(strlen(str)<=sNAMEMAX);
       strcpy(name,str);                 /* save symbol name */
     } /* if */
@@ -2051,6 +2057,7 @@ static void declglb(char *firstname,int firsttag,int fpublic,int fstatic,int fst
       dumpzero((int)size-litidx);
     } /* if */
     litidx=0;
+	if (strlen(name) == 0) continue;
     if (sym==NULL) {    /* define only if not yet defined */
       sym=addvariable(name,address,ident,sGLOBAL,tag,dim,numdim,idxtag);
       if (sc_curstates>0)
@@ -2117,6 +2124,7 @@ static int declloc(int fstatic)
     tag=pc_addtag(NULL);
     if (!needtoken(tSYMBOL)) {
       lexclr(TRUE);                     /* drop the rest of the line... */
+	  litidx = 0;
       return 0;                         /* ...and quit */
     } /* if */
     tokeninfo(&val,&str);
@@ -2274,6 +2282,8 @@ static cell calc_arraysize(int dim[],int numdim,int cur)
     return 0;
   subsize=calc_arraysize(dim,numdim,cur+1);
   newsize=dim[cur]+dim[cur]*subsize;
+  if (newsize == 0) // required for arrays like: new test[][2] = { { 1, 2 }, { 2, 3 } };
+	  return 0;
   if ((ucell)subsize>=CELL_MAX || newsize>=CELL_MAX || newsize<(ucell)subsize
       || newsize*sizeof(cell)>=CELL_MAX)
     return CELL_MAX;
@@ -2411,7 +2421,7 @@ static void initials(int ident,int tag,cell *size,int dim[],int numdim,
           err++;
         } /* if */
       } /* for */
-      if (numdim>1 && dim[numdim-1]==0) {
+      if (numdim>1 && dim[numdim-1]==0 && !errorfound && err == 0) {
         /* also look whether, by any chance, all "counted" final dimensions are
          * the same value; if so, we can store this
          */
@@ -2426,7 +2436,7 @@ static void initials(int ident,int tag,cell *size,int dim[],int numdim,
             break;
           ld=ld->next;
         } /* for */
-        if (d==dim[numdim-2])
+        if (d > 0 && d==dim[numdim-2])
           dim[numdim-1]=match;
       } /* if */
       /* after all arrays have been initalized, we know the (major) dimensions
@@ -2454,6 +2464,11 @@ static cell initarray(int ident,int tag,int dim[],int numdim,int cur,
   assert(cur+2<=numdim);/* there must be 2 dimensions or more to do */
   assert(errorfound!=NULL && *errorfound==FALSE);
   totalsize=0;
+  if (matchtoken('}'))
+  {
+	  lexpush();
+	  return 0;
+  }
   needtoken('{');
   for (idx=0,abortparse=FALSE; !abortparse; idx++) {
     /* In case the major dimension is zero, we need to store the offset
@@ -2481,6 +2496,9 @@ static cell initarray(int ident,int tag,int dim[],int numdim,int cur,
        */
       append_constval(lastdim,itoh(idx),dsize,0);
     } /* if */
+	if (dsize == 0 && !*errorfound) break;
+    if (dim[cur] != 0 && idx >= dim[cur])
+      break;
     totalsize+=dsize;
     if (*errorfound || !matchtoken(','))
       abortparse=TRUE;
@@ -4699,7 +4717,7 @@ static constvalue *insert_constval(constvalue *prev,constvalue *next,const char 
     error(103);       /* insufficient memory (fatal error) */
   memset(cur,0,sizeof(constvalue));
   if (name!=NULL) {
-    assert(strlen(name)<sNAMEMAX);
+    assert(strlen(name)<=sNAMEMAX);
     strcpy(cur->name,name);
   } /* if */
   cur->value=val;
@@ -5068,13 +5086,19 @@ SC_FUNC int constexpr(cell *val,int *tag,symbol **symptr)
 {
   int ident,index;
   cell cidx;
+  BOOL localstaging = FALSE;
 
-  stgset(TRUE);         /* start stage-buffering */
+  if (!staging)
+  {
+	stgset(TRUE);         /* start stage-buffering */
+	localstaging = TRUE;
+  }
   stgget(&index,&cidx); /* mark position in code generator */
   errorset(sEXPRMARK,0);
   ident=expression(val,tag,symptr,FALSE);
   stgdel(index,cidx);   /* scratch generated code */
-  stgset(FALSE);        /* stop stage-buffering */
+  if (localstaging)
+	stgset(FALSE);        /* stop stage-buffering */
   if (ident!=iCONSTEXPR) {
     error(8);           /* must be constant expression */
     if (val!=NULL)

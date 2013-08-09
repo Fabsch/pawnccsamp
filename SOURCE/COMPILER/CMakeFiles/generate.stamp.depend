@@ -1,0 +1,20 @@
+# CMake generation dependency list for this directory.
+H:/Projekte/SAMP/pawn/SOURCE/COMPILER/CMakeLists.txt
+H:/Projekte/SAMP/pawn/SOURCE/COMPILER/CMakeFiles/2.8.10.2/CMakeSystem.cmake
+H:/Projekte/SAMP/pawn/SOURCE/COMPILER/CMakeFiles/2.8.10.2/CMakeCCompiler.cmake
+H:/Projekte/SAMP/pawn/SOURCE/COMPILER/CMakeFiles/2.8.10.2/CMakeCXXCompiler.cmake
+D:/tmp/cmake/Modules/CMakeSystemSpecificInformation.cmake
+D:/tmp/cmake/Modules/CMakeGenericSystem.cmake
+D:/tmp/cmake/Modules/Platform/Windows.cmake
+D:/tmp/cmake/Modules/Platform/WindowsPaths.cmake
+D:/tmp/cmake/Modules/CMakeCInformation.cmake
+D:/tmp/cmake/Modules/Platform/Windows-MSVC-C.cmake
+D:/tmp/cmake/Modules/Platform/Windows-MSVC.cmake
+H:/Projekte/SAMP/pawn/SOURCE/COMPILER/CMakeFiles/2.8.10.2/CMakeRCCompiler.cmake
+D:/tmp/cmake/Modules/CMakeRCInformation.cmake
+D:/tmp/cmake/Modules/CMakeCommonLanguageInclude.cmake
+D:/tmp/cmake/Modules/CMakeCXXInformation.cmake
+D:/tmp/cmake/Modules/Platform/Windows-MSVC-CXX.cmake
+D:/tmp/cmake/Modules/Platform/Windows-MSVC.cmake
+D:/tmp/cmake/Modules/CMakeCommonLanguageInclude.cmake
+D:/tmp/cmake/Modules/CheckIncludeFile.cmake

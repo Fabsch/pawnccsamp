@@ -1,0 +1,43 @@
+
+CODE 0	; 0
+;program exit point
+	halt 0
+
+	proc	; main
+	; line 8
+	; line 9
+	break	; c
+	;$lcl teststr fffffe00
+	stack fffffe00
+	zero.pri
+	addr.alt fffffe00
+	fill 200
+	; line a
+	break	; 2c
+	addr.pri fffffe00
+	push.pri
+	zero.pri
+	pop.alt
+	movs 14
+	;$exp
+	; line c
+	break	; 4c
+	zero.pri
+	push.pri
+	;$par
+	const.pri 14
+	push.pri
+	;$par
+	push.c 8
+	sysreq.c 0	; printf
+	stack c
+	;$exp
+	stack 200
+	zero.pri
+	retn
+
+
+DATA 0	; 0
+dump 4d 79 53 31 0 25 73 0 6c 6c 6f 0 
+
+STKSIZE 1000

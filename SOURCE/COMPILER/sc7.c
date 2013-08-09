@@ -82,25 +82,25 @@ static char *stgpipe=NULL;
 static int pipemax=0;   /* current size of the stage pipe, a second staging buffer */
 static int pipeidx=0;
 
-#define CHECK_STGBUFFER(index) if ((int)(index)>=stgmax)  grow_stgbuffer(&stgbuf, stgmax, (index)+1)
-#define CHECK_STGPIPE(index)   if ((int)(index)>=pipemax) grow_stgbuffer(&stgpipe, pipemax, (index)+1)
+#define CHECK_STGBUFFER(index) if ((int)(index)>=stgmax)  grow_stgbuffer(&stgbuf, &stgmax, (index)+1)
+#define CHECK_STGPIPE(index)   if ((int)(index)>=pipemax) grow_stgbuffer(&stgpipe, &pipemax, (index)+1)
 
-static void grow_stgbuffer(char **buffer, int curmax, int requiredsize)
+static void grow_stgbuffer(char **buffer, int* curmax, int requiredsize)
 {
   char *p;
   int clear= (*buffer==NULL); /* if previously none, empty buffer explicitly */
 
-  assert(curmax<requiredsize);
+  assert(*curmax<requiredsize);
   /* if the staging buffer (holding intermediate code for one line) grows
    * over a few kBytes, there is probably a run-away expression
    */
   if (requiredsize>sSTG_MAX)
     error(102,"staging buffer");    /* staging buffer overflow (fatal error) */
-  curmax=requiredsize+sSTG_GROW;
+  *curmax=requiredsize+sSTG_GROW;
   if (*buffer!=NULL)
-    p=(char *)realloc(*buffer,curmax*sizeof(char));
+    p=(char *)realloc(*buffer,*curmax*sizeof(char));
   else
-    p=(char *)malloc(curmax*sizeof(char));
+    p=(char *)malloc(*curmax*sizeof(char));
   if (p==NULL)
     error(102,"staging buffer");    /* staging buffer overflow (fatal error) */
   *buffer=p;
@@ -193,14 +193,15 @@ SC_FUNC void stgwrite(const char *st)
   int len;
 
   if (staging) {
+    int stlen = strlen(st);
     assert(stgidx==0 || stgbuf!=NULL);  /* staging buffer must be valid if there is (apparently) something in it */
     if (stgidx>=2 && stgbuf[stgidx-1]=='\0' && stgbuf[stgidx-2]!='\n')
       stgidx-=1;                       /* overwrite last '\0' */
+    CHECK_STGBUFFER(stgidx + stlen + 1);
     while (*st!='\0') {                /* copy to staging buffer */
-      CHECK_STGBUFFER(stgidx);
       stgbuf[stgidx++]=*st++;
     } /* while */
-    CHECK_STGBUFFER(stgidx);
+    //CHECK_STGBUFFER(stgidx);
     stgbuf[stgidx++]='\0';
   } else {
     len=(stgbuf!=NULL) ? strlen(stgbuf) : 0;

@@ -1,0 +1,141 @@
+The system is: Windows - 6.1 - x86
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler:  
+Build flags: 
+Id flags: 
+
+The output was:
+0
+
+Microsoft (R) Visual Studio Version 10.0.40219.1.
+Copyright (C) Microsoft Corp. Alle Rechte vorbehalten.
+1>------ Erstellen gestartet: Projekt: CompilerIdC, Konfiguration: Debug Win32 ------
+1>  CMakeCCompilerId.c
+1>  CompilerIdC.vcxproj -> H:\Projekte\SAMP\pawn\SOURCE\COMPILER\CMakeFiles\2.8.10.2\CompilerIdC\.\CompilerIdC.exe
+1>  CMAKE_C_COMPILER=C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\cl.exe
+========== Erstellen: 1 erfolgreich, Fehler bei 0, 0 aktuell, 0 Åbersprungen ==========
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.vcxproj"
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.vcxproj.user"
+
+The C compiler identification is MSVC, found in "H:/Projekte/SAMP/pawn/SOURCE/COMPILER/CMakeFiles/2.8.10.2/CompilerIdC/CompilerIdC.exe"
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiler:  
+Build flags: 
+Id flags: 
+
+The output was:
+0
+
+Microsoft (R) Visual Studio Version 10.0.40219.1.
+Copyright (C) Microsoft Corp. Alle Rechte vorbehalten.
+1>------ Erstellen gestartet: Projekt: CompilerIdCXX, Konfiguration: Debug Win32 ------
+1>  CMakeCXXCompilerId.cpp
+1>  CompilerIdCXX.vcxproj -> H:\Projekte\SAMP\pawn\SOURCE\COMPILER\CMakeFiles\2.8.10.2\CompilerIdCXX\.\CompilerIdCXX.exe
+1>  CMAKE_CXX_COMPILER=C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\cl.exe
+========== Erstellen: 1 erfolgreich, Fehler bei 0, 0 aktuell, 0 Åbersprungen ==========
+
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.vcxproj"
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.vcxproj.user"
+
+The CXX compiler identification is MSVC, found in "H:/Projekte/SAMP/pawn/SOURCE/COMPILER/CMakeFiles/2.8.10.2/CompilerIdCXX/CompilerIdCXX.exe"
+
+Determining if the C compiler works passed with the following output:
+Change Dir: H:/Projekte/SAMP/pawn/SOURCE/COMPILER/CMakeFiles/CMakeTmp
+
+Run Build Command:C:\PROGRA~2\MICROS~2.0\Common7\IDE\devenv.com CMAKE_TRY_COMPILE.sln /build Debug /project cmTryCompileExec1746205687
+
+Microsoft (R) Visual Studio Version 10.0.40219.1.
+Copyright (C) Microsoft Corp. Alle Rechte vorbehalten.
+1>------ Erstellen gestartet: Projekt: cmTryCompileExec1746205687, Konfiguration: Debug Win32 ------
+1>  Microsoft (R) 32-Bit C/C++-Optimierungscompiler Version 16.00.40219.01 fÅr 80x86
+1>  Copyright (C) Microsoft Corporation. Alle Rechte vorbehalten.
+1>  
+1>  cl /c /Zi /W3 /WX- /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"cmTryCompileExec1746205687.dir\Debug\\" /Fd"H:/Projekte/SAMP/pawn/SOURCE/COMPILER/CMakeFiles/CMakeTmp/Debug/cmTryCompileExec1746205687.pdb" /Gd /TC /analyze- /errorReport:prompt testCCompiler.c  /Zm1000 
+1>  
+1>  testCCompiler.c
+1>  cmTryCompileExec1746205687.vcxproj -> H:\Projekte\SAMP\pawn\SOURCE\COMPILER\CMakeFiles\CMakeTmp\Debug\cmTryCompileExec1746205687.exe
+========== Erstellen: 1 erfolgreich, Fehler bei 0, 0 aktuell, 0 Åbersprungen ==========
+
+
+Detecting C compiler ABI info compiled with the following output:
+Change Dir: H:/Projekte/SAMP/pawn/SOURCE/COMPILER/CMakeFiles/CMakeTmp
+
+Run Build Command:C:\PROGRA~2\MICROS~2.0\Common7\IDE\devenv.com CMAKE_TRY_COMPILE.sln /build Debug /project cmTryCompileExec1752592343
+
+Microsoft (R) Visual Studio Version 10.0.40219.1.
+Copyright (C) Microsoft Corp. Alle Rechte vorbehalten.
+1>------ Erstellen gestartet: Projekt: cmTryCompileExec1752592343, Konfiguration: Debug Win32 ------
+1>  Microsoft (R) 32-Bit C/C++-Optimierungscompiler Version 16.00.40219.01 fÅr 80x86
+1>  Copyright (C) Microsoft Corporation. Alle Rechte vorbehalten.
+1>  
+1>  cl /c /Zi /W3 /WX- /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"cmTryCompileExec1752592343.dir\Debug\\" /Fd"H:/Projekte/SAMP/pawn/SOURCE/COMPILER/CMakeFiles/CMakeTmp/Debug/cmTryCompileExec1752592343.pdb" /Gd /TC /analyze- /errorReport:prompt C:\tmp\cmake\Modules\CMakeCCompilerABI.c  /Zm1000 
+1>  
+1>  CMakeCCompilerABI.c
+1>  cmTryCompileExec1752592343.vcxproj -> H:\Projekte\SAMP\pawn\SOURCE\COMPILER\CMakeFiles\CMakeTmp\Debug\cmTryCompileExec1752592343.exe
+========== Erstellen: 1 erfolgreich, Fehler bei 0, 0 aktuell, 0 Åbersprungen ==========
+
+
+Determining if the CXX compiler works passed with the following output:
+Change Dir: H:/Projekte/SAMP/pawn/SOURCE/COMPILER/CMakeFiles/CMakeTmp
+
+Run Build Command:C:\PROGRA~2\MICROS~2.0\Common7\IDE\devenv.com CMAKE_TRY_COMPILE.sln /build Debug /project cmTryCompileExec2987939112
+
+Microsoft (R) Visual Studio Version 10.0.40219.1.
+Copyright (C) Microsoft Corp. Alle Rechte vorbehalten.
+1>------ Erstellen gestartet: Projekt: cmTryCompileExec2987939112, Konfiguration: Debug Win32 ------
+1>  Microsoft (R) 32-Bit C/C++-Optimierungscompiler Version 16.00.40219.01 fÅr 80x86
+1>  Copyright (C) Microsoft Corporation. Alle Rechte vorbehalten.
+1>  
+1>  cl /c /Zi /W3 /WX- /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fo"cmTryCompileExec2987939112.dir\Debug\\" /Fd"H:/Projekte/SAMP/pawn/SOURCE/COMPILER/CMakeFiles/CMakeTmp/Debug/cmTryCompileExec2987939112.pdb" /Gd /TP /analyze- /errorReport:prompt testCXXCompiler.cxx  /Zm1000 
+1>  
+1>  testCXXCompiler.cxx
+1>  cmTryCompileExec2987939112.vcxproj -> H:\Projekte\SAMP\pawn\SOURCE\COMPILER\CMakeFiles\CMakeTmp\Debug\cmTryCompileExec2987939112.exe
+========== Erstellen: 1 erfolgreich, Fehler bei 0, 0 aktuell, 0 Åbersprungen ==========
+
+
+Detecting CXX compiler ABI info compiled with the following output:
+Change Dir: H:/Projekte/SAMP/pawn/SOURCE/COMPILER/CMakeFiles/CMakeTmp
+
+Run Build Command:C:\PROGRA~2\MICROS~2.0\Common7\IDE\devenv.com CMAKE_TRY_COMPILE.sln /build Debug /project cmTryCompileExec501422205
+
+Microsoft (R) Visual Studio Version 10.0.40219.1.
+Copyright (C) Microsoft Corp. Alle Rechte vorbehalten.
+1>------ Erstellen gestartet: Projekt: cmTryCompileExec501422205, Konfiguration: Debug Win32 ------
+1>  Microsoft (R) 32-Bit C/C++-Optimierungscompiler Version 16.00.40219.01 fÅr 80x86
+1>  Copyright (C) Microsoft Corporation. Alle Rechte vorbehalten.
+1>  
+1>  cl /c /Zi /W3 /WX- /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fo"cmTryCompileExec501422205.dir\Debug\\" /Fd"H:/Projekte/SAMP/pawn/SOURCE/COMPILER/CMakeFiles/CMakeTmp/Debug/cmTryCompileExec501422205.pdb" /Gd /TP /analyze- /errorReport:prompt C:\tmp\cmake\Modules\CMakeCXXCompilerABI.cpp  /Zm1000 
+1>  
+1>  CMakeCXXCompilerABI.cpp
+1>  cmTryCompileExec501422205.vcxproj -> H:\Projekte\SAMP\pawn\SOURCE\COMPILER\CMakeFiles\CMakeTmp\Debug\cmTryCompileExec501422205.exe
+========== Erstellen: 1 erfolgreich, Fehler bei 0, 0 aktuell, 0 Åbersprungen ==========
+
+
+Determining if the include file stdint.h exists passed with the following output:
+Change Dir: H:/Projekte/SAMP/pawn/SOURCE/COMPILER/CMakeFiles/CMakeTmp
+
+Run Build Command:C:\PROGRA~2\MICROS~2.0\Common7\IDE\devenv.com CMAKE_TRY_COMPILE.sln /build Debug /project cmTryCompileExec679417254
+
+Microsoft (R) Visual Studio Version 10.0.40219.1.
+Copyright (C) Microsoft Corp. Alle Rechte vorbehalten.
+1>------ Erstellen gestartet: Projekt: cmTryCompileExec679417254, Konfiguration: Debug Win32 ------
+1>  Microsoft (R) 32-Bit C/C++-Optimierungscompiler Version 16.00.40219.01 fÅr 80x86
+1>  Copyright (C) Microsoft Corporation. Alle Rechte vorbehalten.
+1>  
+1>  cl /c /Zi /W3 /WX- /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"cmTryCompileExec679417254.dir\Debug\\" /Fd"H:/Projekte/SAMP/pawn/SOURCE/COMPILER/CMakeFiles/CMakeTmp/Debug/cmTryCompileExec679417254.pdb" /Gd /TC /analyze- /errorReport:prompt CheckIncludeFile.c  /Zm1000 
+1>  
+1>  CheckIncludeFile.c
+1>  cmTryCompileExec679417254.vcxproj -> H:\Projekte\SAMP\pawn\SOURCE\COMPILER\CMakeFiles\CMakeTmp\Debug\cmTryCompileExec679417254.exe
+========== Erstellen: 1 erfolgreich, Fehler bei 0, 0 aktuell, 0 Åbersprungen ==========
+
+

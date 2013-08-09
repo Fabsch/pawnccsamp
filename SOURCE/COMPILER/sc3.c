@@ -1382,6 +1382,7 @@ static int hier2(value *lval)
     if (tok==tLABEL) {
       constvalue *tagsym=find_constval(&tagname_tab,st,0);
       tag=(int)((tagsym!=NULL) ? tagsym->value : 0);
+	  sym = NULL;
     } else {
       sym=findloc(st);
       if (sym==NULL)
@@ -1976,7 +1977,7 @@ static int nesting=0;
      * reserved memory block as a hidden parameter
      */
     retsize=(int)array_totalsize(symret);
-    assert(retsize>0);
+    assert(retsize>=0); // 0 means undefined
     modheap(retsize*sizeof(cell));/* address is in ALT */
     pushreg(sALT);                /* pass ALT as the last (hidden) parameter */
     decl_heap+=retsize;

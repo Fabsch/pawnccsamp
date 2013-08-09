@@ -297,6 +297,7 @@ static void readline(unsigned char *line)
 {
   int i,num,cont;
   unsigned char *ptr;
+  char *nlsearch;
 
   if (lptr==term_expr)
     return;
@@ -351,11 +352,11 @@ static void readline(unsigned char *line)
           memmove(line,ptr,strlen((char*)ptr)+1);
       } /* if */
       cont=FALSE;
-      /* check whether a full line was read */
-      if (strchr((char*)line,'\n')==NULL && !pc_eofsrc(inpf))
+	  /* check whether a full line was read */
+      if ((nlsearch = strchr((char*)line,'\n'))==NULL && !pc_eofsrc(inpf))
         error(75);      /* line too long */
       /* check if the next line must be concatenated to this line */
-      if ((ptr=(unsigned char*)strchr((char*)line,'\n'))==NULL)
+      if ((ptr=(unsigned char*)nlsearch)==NULL)
         ptr=(unsigned char*)strchr((char*)line,'\r');
       if (ptr!=NULL && ptr>line) {
         assert(*(ptr+1)=='\0'); /* '\n' or '\r' should be last in the string */
@@ -1724,17 +1725,80 @@ SC_FUNC void preprocess(void)
   } while (iscommand!=CMD_NONE && iscommand!=CMD_TERM && freading); /* enddo */
 }
 
-static const unsigned char *unpackedstring(const unsigned char *lptr,int flags)
+static const unsigned char *unpackedstring(const unsigned char *tptr,int flags, char startchar)
 {
-  while (*lptr!='\"' && *lptr!='\0') {
-    if (*lptr=='\a') {          /* ignore '\a' (which was inserted at a line concatenation) */
-      lptr++;
-      continue;
-    } /* if */
-    litadd(litchar(&lptr,flags | UTF8MODE));  /* litchar() alters "lptr" */
-  } /* while */
-  litadd(0);                    /* terminate string */
-  return lptr;
+	const unsigned char *tmp = NULL;
+	char *tmpstr = (const unsigned char*)malloc(sLINEMAX+1 * sizeof(char)); // temporary storage for the string (for string indexing)
+	char *curpos = tmpstr, *end; // current position in tmpstr
+	// TODO indexed string: "string"[2]
+	if (!tmpstr)
+		error(103); // out of memory
+	if (startchar == '#') // in that case there may be whitespace before, skip to that
+	{
+		while (*tptr == ' ' || *tptr == '\t')
+			tptr++;
+	}
+	//while (*lptr!='\"' && *lptr!='\0') {
+	while (*tptr != '\0') {
+		if (*tptr=='\a') {          /* ignore '\a' (which was inserted at a line concatenation) */
+			tptr++;
+			continue;
+		} /* if */
+		else if (	*tptr == '"' && (*(tptr-1) != '\\' || *(tptr-2) == '\\') && startchar == '"' ||
+					startchar == '#' && !alphanum(*tptr)) {	/* end of string, check for possible concatenation */
+			// look for following strings, separated by whitespaces only
+			tmp = tptr + 1;
+			while (*tmp == ' ' || *tmp == '\t')
+				tmp++;
+			if (*tmp == '#') /* numbers, add until whitespace */
+			{
+				tptr = ++tmp;
+				while (alphanum(*tptr) || *tptr == '.') /* TODO thousands separators maybe? */
+					*curpos++ = *tptr++;
+				while (*tptr == ' ' || *tptr == '\t') /* skip to next non-whitespace character */
+					tptr++;
+				tmp = tptr;
+			}
+			if (*tmp != '"' && *tmp != '#') /* nothing more here, return old pointer */
+				break;
+			tptr = tmp + 1; /* continue string */
+		}
+		*curpos++ = *tptr++;
+	} /* while */
+	*curpos = '\0';
+
+	end = curpos;
+	curpos = tmpstr;
+
+	// look for string indexing, in any case we should have a [ in *tmp then
+	assert(tmp != NULL); // this should be set or else we got passed a wrong string
+	if (*tmp == '[')
+	{
+		cell val;
+		lptr = tmp + 1; // set this so constexpr gets the right result
+		// indexed, use constexpr to get size
+		if (!constexpr(&val, NULL, NULL))
+		{
+			error(8);
+		}
+		needtoken(']');
+		// check if this is in the string length
+		if (val > 0 && val < (end - curpos))
+		{
+			// skip val chars 
+			curpos += val;
+		}
+		else
+		{
+			error(32, "-constant string-"); // out of bounds
+		}
+		tptr = lptr;
+	}
+	while (curpos < end)
+		litadd(litchar(&curpos,flags | UTF8MODE));  /* litchar() alters "lptr" */
+	litadd(0);                    /* terminate string */
+	free(tmpstr);
+	return tptr;
 }
 
 static const unsigned char *packedstring(const unsigned char *lptr,int flags)
@@ -1947,20 +2011,31 @@ SC_FUNC int lex(cell *lexvalue,char **lexsym)
         error(220);
       } /* if */
     } /* if */
-  } else if (*lptr=='\"' || *lptr==sc_ctrlchar && *(lptr+1)=='\"')
-  {                                     /* unpacked string literal */
-    _lextok=tSTRING;
+  } else if (*lptr=='\"' || *lptr==sc_ctrlchar && *(lptr+1)=='\"' || *lptr == '#')
+  {
+	char startchar = *lptr; // store beginning character
     stringflags= (*lptr==sc_ctrlchar) ? RAWMODE : 0;
-    *lexvalue=_lexval=litidx;
+    *lexvalue=litidx; // set _lexvalue at the end
     lptr+=1;            /* skip double quote */
     if ((stringflags & RAWMODE)!=0)
       lptr+=1;          /* skip "escape" character too */
-    lptr=sc_packstr ? packedstring(lptr,stringflags) : unpackedstring(lptr,stringflags);
+    lptr=sc_packstr ? packedstring(lptr,stringflags) : unpackedstring(lptr,stringflags, startchar);
     if (*lptr=='\"')
       lptr+=1;          /* skip final quote */
-    else
+    /*else				// TODO disable this error for now (due to string concatenation like #555 strings are sometimes not terminated at the end)
       error(37);        /* invalid (non-terminated) string */
-  } else if (*lptr=='!' && *(lptr+1)=='\"'
+	_lextok=tSTRING; // set this after the call to unpackedstring or we might get a ] due to the call to constexpr
+	_lexval = *lexvalue; // set this after too because of the same reason
+  }/* else if (*lptr == '#') // stringifying a symbol
+  {
+	stringflags = 0;
+	_lextok = tSTRING;
+	*lexvalue = _lexval = litidx;
+	lptr++; // skip sharp
+	while (alphanum(*lptr)) // add until any non-alphanumeric character
+		litadd(litchar(&lptr, stringflags)); // litchar increments lptr
+	litadd(0); // terminate
+  }*/ else if (*lptr=='!' && *(lptr+1)=='\"'
              || *lptr=='!' && *(lptr+1)==sc_ctrlchar && *(lptr+2)=='\"'
              || *lptr==sc_ctrlchar && *(lptr+1)=='!' && *(lptr+2)=='\"')
   {                                     /* packed string literal */
@@ -1970,7 +2045,7 @@ SC_FUNC int lex(cell *lexvalue,char **lexsym)
     lptr+=2;            /* skip exclamation point and double quote */
     if ((stringflags & RAWMODE)!=0)
       lptr+=1;          /* skip "escape" character too */
-    lptr=sc_packstr ? unpackedstring(lptr,stringflags) : packedstring(lptr,stringflags);
+    lptr=sc_packstr ? unpackedstring(lptr,stringflags,'"') : packedstring(lptr,stringflags);
     if (*lptr=='\"')
       lptr+=1;          /* skip final quote */
     else
@@ -2153,17 +2228,16 @@ static int match(char *st,int end)
   return 1;
 }
 
+#define chk_litq() if (litidx >= litmax) chk_grow_litq();
 static void chk_grow_litq(void)
 {
-  if (litidx>=litmax) {
-    cell *p;
+  cell *p;
 
-    litmax+=sDEF_LITMAX;
-    p=(cell *)realloc(litq,litmax*sizeof(cell));
-    if (p==NULL)
-      error(102,"literal table");   /* literal table overflow (fatal error) */
-    litq=p;
-  } /* if */
+  litmax+=sDEF_LITMAX;
+  p=(cell *)realloc(litq,litmax*sizeof(cell));
+  if (p==NULL)
+    error(102,"literal table");   /* literal table overflow (fatal error) */
+  litq=p;
 }
 
 /*  litadd
@@ -2176,7 +2250,7 @@ static void chk_grow_litq(void)
  */
 SC_FUNC void litadd(cell value)
 {
-  chk_grow_litq();
+  chk_litq();
   assert(litidx<litmax);
   litq[litidx++]=value;
 }
@@ -2191,7 +2265,7 @@ SC_FUNC void litadd(cell value)
  */
 SC_FUNC void litinsert(cell value,int pos)
 {
-  chk_grow_litq();
+  chk_litq();
   assert(litidx<litmax);
   assert(pos>=0 && pos<=litidx);
   memmove(litq+(pos+1),litq+pos,(litidx-pos)*sizeof(cell));

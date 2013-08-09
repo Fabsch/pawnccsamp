@@ -1,0 +1,4 @@
+H:/Projekte/SAMP/pawn/SOURCE/COMPILER/CMakeFiles/ALL_BUILD.dir
+H:/Projekte/SAMP/pawn/SOURCE/COMPILER/CMakeFiles/ZERO_CHECK.dir
+H:/Projekte/SAMP/pawn/SOURCE/COMPILER/CMakeFiles/pawnc.dir
+H:/Projekte/SAMP/pawn/SOURCE/COMPILER/CMakeFiles/pawncc.dir

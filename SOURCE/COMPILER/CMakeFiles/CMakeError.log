@@ -1,0 +1,54 @@
+Determining if the include file unistd.h exists failed with the following output:
+Change Dir: H:/Projekte/SAMP/pawn/SOURCE/COMPILER/CMakeFiles/CMakeTmp
+
+Run Build Command:C:\PROGRA~2\MICROS~2.0\Common7\IDE\devenv.com CMAKE_TRY_COMPILE.sln /build Debug /project cmTryCompileExec3365091797
+
+Microsoft (R) Visual Studio Version 10.0.40219.1.
+Copyright (C) Microsoft Corp. Alle Rechte vorbehalten.
+1>------ Erstellen gestartet: Projekt: cmTryCompileExec3365091797, Konfiguration: Debug Win32 ------
+1>  Microsoft (R) 32-Bit C/C++-Optimierungscompiler Version 16.00.40219.01 fÅr 80x86
+1>  Copyright (C) Microsoft Corporation. Alle Rechte vorbehalten.
+1>  
+1>  cl /c /Zi /W3 /WX- /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"cmTryCompileExec3365091797.dir\Debug\\" /Fd"H:/Projekte/SAMP/pawn/SOURCE/COMPILER/CMakeFiles/CMakeTmp/Debug/cmTryCompileExec3365091797.pdb" /Gd /TC /analyze- /errorReport:prompt CheckIncludeFile.c  /Zm1000 
+1>  
+1>  CheckIncludeFile.c
+1>CheckIncludeFile.c(1): fatal error C1083: Datei (Include) kann nicht geîffnet werden: "unistd.h": No such file or directory
+========== Erstellen: 0 erfolgreich, Fehler bei 1, 0 aktuell, 0 Åbersprungen ==========
+
+
+Determining if the include file inttypes.h exists failed with the following output:
+Change Dir: H:/Projekte/SAMP/pawn/SOURCE/COMPILER/CMakeFiles/CMakeTmp
+
+Run Build Command:C:\PROGRA~2\MICROS~2.0\Common7\IDE\devenv.com CMAKE_TRY_COMPILE.sln /build Debug /project cmTryCompileExec2036204804
+
+Microsoft (R) Visual Studio Version 10.0.40219.1.
+Copyright (C) Microsoft Corp. Alle Rechte vorbehalten.
+1>------ Erstellen gestartet: Projekt: cmTryCompileExec2036204804, Konfiguration: Debug Win32 ------
+1>  Microsoft (R) 32-Bit C/C++-Optimierungscompiler Version 16.00.40219.01 fÅr 80x86
+1>  Copyright (C) Microsoft Corporation. Alle Rechte vorbehalten.
+1>  
+1>  cl /c /Zi /W3 /WX- /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"cmTryCompileExec2036204804.dir\Debug\\" /Fd"H:/Projekte/SAMP/pawn/SOURCE/COMPILER/CMakeFiles/CMakeTmp/Debug/cmTryCompileExec2036204804.pdb" /Gd /TC /analyze- /errorReport:prompt CheckIncludeFile.c  /Zm1000 
+1>  
+1>  CheckIncludeFile.c
+1>CheckIncludeFile.c(1): fatal error C1083: Datei (Include) kann nicht geîffnet werden: "inttypes.h": No such file or directory
+========== Erstellen: 0 erfolgreich, Fehler bei 1, 0 aktuell, 0 Åbersprungen ==========
+
+
+Determining if the include file alloca.h exists failed with the following output:
+Change Dir: H:/Projekte/SAMP/pawn/SOURCE/COMPILER/CMakeFiles/CMakeTmp
+
+Run Build Command:C:\PROGRA~2\MICROS~2.0\Common7\IDE\devenv.com CMAKE_TRY_COMPILE.sln /build Debug /project cmTryCompileExec2848547508
+
+Microsoft (R) Visual Studio Version 10.0.40219.1.
+Copyright (C) Microsoft Corp. Alle Rechte vorbehalten.
+1>------ Erstellen gestartet: Projekt: cmTryCompileExec2848547508, Konfiguration: Debug Win32 ------
+1>  Microsoft (R) 32-Bit C/C++-Optimierungscompiler Version 16.00.40219.01 fÅr 80x86
+1>  Copyright (C) Microsoft Corporation. Alle Rechte vorbehalten.
+1>  
+1>  cl /c /Zi /W3 /WX- /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"cmTryCompileExec2848547508.dir\Debug\\" /Fd"H:/Projekte/SAMP/pawn/SOURCE/COMPILER/CMakeFiles/CMakeTmp/Debug/cmTryCompileExec2848547508.pdb" /Gd /TC /analyze- /errorReport:prompt CheckIncludeFile.c  /Zm1000 
+1>  
+1>  CheckIncludeFile.c
+1>CheckIncludeFile.c(1): fatal error C1083: Datei (Include) kann nicht geîffnet werden: "alloca.h": No such file or directory
+========== Erstellen: 0 erfolgreich, Fehler bei 1, 0 aktuell, 0 Åbersprungen ==========
+
+

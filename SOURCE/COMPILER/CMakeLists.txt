@@ -22,7 +22,7 @@ IF(HAVE_ALLOCA_H)
 ENDIF(HAVE_ALLOCA_H)
 
 IF(UNIX)
-  ADD_DEFINITIONS(-DLINUX -DENABLE_BINRELOC -g)
+  ADD_DEFINITIONS(-DLINUX -DENABLE_BINRELOC)
   INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/../linux)
   LINK_LIBRARIES(pthread) #CMake adds the "lib" prefix, so "pthread" becomes "libpthread"
 ENDIF(UNIX)
@@ -31,10 +31,10 @@ ENDIF(UNIX)
 SET(PAWNC_SRCS sc1.c sc2.c sc3.c sc4.c sc5.c sc6.c sc7.c
 	scexpand.c sci18n.c sclist.c scmemfil.c scstate.c scvars.c
 	lstring.c memfile.c libpawnc.c)
-SET_SOURCE_FILES_PROPERTIES(sc1.c COMPILE_FLAGS -DNO_MAIN)
+SET_SOURCE_FILES_PROPERTIES(sc1.c COMPILE_FLAGS "-DNO_MAIN -O2")
 IF(WIN32)
   SET(PAWNC_SRCS ${PAWNC_SRCS} libpawnc.rc)
-  SET_SOURCE_FILES_PROPERTIES(libpawnc.c COMPILE_FLAGS -DPAWNC_DLL)
+  SET_SOURCE_FILES_PROPERTIES(libpawnc.c COMPILE_FLAGS "-DPAWNC_DLL -O2")
   IF(BORLAND)
     # Borland linker uses a DEF file if one is in the output directory
     CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/libpawnc.def.borland ${CMAKE_BINARY_DIR}/pawnc.def COPY_ONLY)
@@ -48,7 +48,7 @@ IF(UNIX)
 ENDIF(UNIX)
 ADD_LIBRARY(pawnc SHARED ${PAWNC_SRCS})
 IF(WATCOM)  #Watcom C/C++ does not support a .DEF file for the exports
-  SET_TARGET_PROPERTIES(pawnc PROPERTIES LINK_FLAGS "/exp=libpawnc")
+  SET_TARGET_PROPERTIES(pawnc PROPERTIES LINK_FLAGS "/exp=libpawnc -O2")
 ENDIF(WATCOM)
 IF(UNIX)
   # Unix exports all symbols by default; we want only a very select few exported symbols
