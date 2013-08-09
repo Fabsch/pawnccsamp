@@ -1,0 +1,5 @@
+make
+/usr/bin/gcc  -g -fPIC    -shared -Wl,-soname,libpawnc.so -o libpawnc.so CMakeFiles/pawnc.dir/sc1.o CMakeFiles/pawnc.dir/sc2.o CMakeFiles/pawnc.dir/sc3.o CMakeFiles/pawnc.dir/sc4.o CMakeFiles/pawnc.dir/sc5.o CMakeFiles/pawnc.dir/sc6.o CMakeFiles/pawnc.dir/sc7.o CMakeFiles/pawnc.dir/scexpand.o CMakeFiles/pawnc.dir/sci18n.o CMakeFiles/pawnc.dir/sclist.o CMakeFiles/pawnc.dir/scmemfil.o CMakeFiles/pawnc.dir/scstate.o CMakeFiles/pawnc.dir/scvars.o CMakeFiles/pawnc.dir/lstring.o CMakeFiles/pawnc.dir/memfile.o CMakeFiles/pawnc.dir/libpawnc.o CMakeFiles/pawnc.dir/home/fabsch/tmp/pawn/SOURCE/linux/binreloc.o -lpthread  -g3
+/usr/bin/gcc      -g CMakeFiles/pawncc.dir/pawncc.o  -o pawncc -rdynamic -L/home/fabsch/tmp/pawn/SOURCE/COMPILER -lpthread libpawnc.so -lpthread -Wl,-rpath,/home/fabsch/tmp/pawn/SOURCE/COMPILER -g3
+
+cp libpawnc.so pawncc ~/entwicklung/samp/samp_grh/pawno/

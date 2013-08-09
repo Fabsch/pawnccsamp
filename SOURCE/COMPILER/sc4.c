@@ -233,8 +233,7 @@ SC_FUNC void begcseg(void)
 SC_FUNC void begdseg(void)
 {
   if (sc_status!=statSKIP && (curseg!=sIN_DSEG || fcurrent!=fcurseg)) {
-    stgwrite("\n");
-    stgwrite("DATA ");
+    stgwrite("\nDATA ");
     outval(fcurrent,FALSE);
     stgwrite("\t; ");
     outval((glb_declared-litidx)*sizeof(cell),TRUE);
