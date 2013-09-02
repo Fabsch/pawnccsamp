@@ -1430,6 +1430,9 @@ static void setconstants(void)
     #if defined _I32_MAX
       add_constant("cellmax",_I32_MAX,sGLOBAL,0);
       add_constant("cellmin",_I32_MIN,sGLOBAL,0);
+    #elif LONG_MAX > 2147483647 * 2
+	  add_constant("cellmax",INT_MAX,sGLOBAL,0);
+      add_constant("cellmin",INT_MIN,sGLOBAL,0);
     #else
       add_constant("cellmax",LONG_MAX,sGLOBAL,0);
       add_constant("cellmin",LONG_MIN,sGLOBAL,0);
